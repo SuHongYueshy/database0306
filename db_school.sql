@@ -44,9 +44,9 @@ insert into db_school.sc values ('1850212601', 002, 98.6);
 show full columns from db_school.sc;
 select * from db_school.sc;
 
-select * from sc where sno = '1850212601';
+# select * from sc where sno = '1850212601';
 
-select
+
 
 
 
