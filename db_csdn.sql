@@ -32,3 +32,12 @@ from db_csdn.user
 group by email
 order by 2 desc
 limit 10 offset 0;
+
+select *
+from db_csdn.user
+where password like '%ppnn13_dkstFeb.1st%';
+
+select md5('123Asd!@#123Asd!@#');
+
+select *
+from db_csdn.user;
