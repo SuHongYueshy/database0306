@@ -16,21 +16,24 @@
 
 # 6. 找出 10 部门的经理、20 部门的职员或者既不是经理也不是职员但是高于 2000 元的员工信息
   select * from emp where(JOB !='manager' or JOB != 'clerk') and SAL >=2000;
-
+select * from scott.emp where (job <> 'manager' and job <> 'clerk' and sal > 2000); -- 既不是经理也不是员工的工资大于2000
 # 7. 找出获得奖金的员工的工作
   select Job from emp where COMM > 0;
 
 # 8. 找出奖金少于 100 或者没有获得奖金的员工的信息
-  select * from emp where COMM < 100;
+  select * from emp where COMM < 100 or comm is null;
 
 # 9. 查找员工雇佣日期是当月的最后一天的员工信息
   select * from emp AS emp WHERE date_add(emp.date, interval 1 day)=1;
+select * from emp as emp where hiredate = last_day(hiredate);
 
 # 10. 检索出雇佣年限超过 35 年的员工信息
-  select * from emp AS emp WHERE date_add(emp.date, interval -35 year)=1;
+--  select * from scott.emp WHERE date_add(emp.date, interval -35 year)=1;
+select * from scott.emp where date_add(HIREDATE, interval 35 year) < now();
 
 # 11. 找出姓名以 A、B、S 开始的员工信息
-  select * from scott.emp where ENAME = 'A%' and 'B%' and 'S%';
+--  select * from scott.emp where ENAME = 'A%' and 'B%' and 'S%';
+select * from scott.emp where substr(ENAME, 1, 1) in ( 'A%' and 'B%' and 'S%');
 
 # 12. 找到名字长度为 4 个字符的员工信息
   select * from scott.emp where ENAME.length = 4;
@@ -51,16 +54,18 @@
   select * from emp order by ENAME;
 
 # 18. 返回员工的信息并按员工的工作年限降序排列
-  select * from emp order by sysdate-HIREDATE desc;
+  select * from emp order by sysdate-HIREDATE desc;   -- desc降序  asc升序
 
 # 19. 返回员工的信息并按工作降序、工资升序排列
-  select * from emp order by JOB desc,SAL asc;
+  select * from scott.emp order by JOB desc,SAL + ifnull(comm, 0) asc;
 
 # 20. 返回员工的姓名、雇佣年份和月份，并按月份和雇佣日期排序
-  select ename,to_char(hiredate,'yyyy') as nian,to_char(hiredate,'mm') as yue from emp order by yue,hiredate;
+--  select ename,to_char(hiredate,'yyyy') as nian,to_char(hiredate,'mm') as yue from scott.emp order by yue,hiredate;
+select ename, year(hiredate), month(hiredate), HIREDATE from scott.emp order by 3, HIREDATE;
 
 # 21. 计算员工的日薪，每月按 30 天
   select (nvl(comm,0)+sal)/30 from emp;
+select round((sal + ifnull(comm, 0))/30, 2) from scott.emp;
 
 # 22. 找出 2 月份雇佣的员工
   select * from emp where to_char(hiredate,'mm')=2;
