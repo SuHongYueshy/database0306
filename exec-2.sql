@@ -22,7 +22,6 @@ from scott.emp a,
      scott.emp b
 where a.mgr = b.empno
   and a.hiredate < b.hiredate;
-
 select a.ename, b.ename from scott.emp a join scott.emp b on a.mgr =b.EMPNO where a.HIREDATE < b. HIREDATE;
 
 # 5. 返回员工姓名及其所在的部门名称

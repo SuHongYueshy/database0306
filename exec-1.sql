@@ -17,6 +17,7 @@
 # 6. 找出 10 部门的经理、20 部门的职员或者既不是经理也不是职员但是高于 2000 元的员工信息
   select * from emp where(JOB !='manager' or JOB != 'clerk') and SAL >=2000;
 select * from scott.emp where (job <> 'manager' and job <> 'clerk' and sal > 2000); -- 既不是经理也不是员工的工资大于2000
+
 # 7. 找出获得奖金的员工的工作
   select Job from emp where COMM > 0;
 
@@ -39,13 +40,13 @@ select * from scott.emp where substr(ENAME, 1, 1) in ( 'A%' and 'B%' and 'S%');
   select * from scott.emp where ENAME.length = 4;
 
 # 13. 名字中不包含 R 字符的员工信息
-  select * from scott.emp where ENAME not like '%S%';
+  select * from scott.emp where ENAME not like '%R%';
 
 # 14. 找出员工名字的前3个字符
   select substr(ENAME, 1, 3) from emp;
 
 # 15. 将名字中 A 改为 a
-  select replace(ENAME,'s','S') from emp;
+  select replace(ENAME,'a','A') from emp;
 
 # 16. 将员工的雇佣日期拖后 10 年
   select hiredate,add_months(hiredate,120) from emp;
@@ -79,4 +80,6 @@ select round((sal + ifnull(comm, 0))/30, 2) from scott.emp;
 # 25. 计算出员工被雇佣了多少年、多少月、多少日
   select trunc(months_between(sysdate,HIREDATE)/12) from emp;
   select trunc((months_between(sysdate,hiredate))-trunc(months_between(sysdate,hiredate)/12)*12) from emp;
-  select trunc((sysdate-hiredate)-trunc(months_between(sysdate,hiredate)/12)*365-trunc((months_between(sysdate,hiredate))-trunc(months_between(sysdate,hiredate)/12)*12)*30) from emp;
+select trunc((sysdate - hiredate) - trunc(months_between(sysdate, hiredate) / 12) * 365 -
+             trunc((months_between(sysdate, hiredate)) - trunc(months_between(sysdate, hiredate) / 12) * 12) * 30)
+from emp;
